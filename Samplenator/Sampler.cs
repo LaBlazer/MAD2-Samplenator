@@ -35,7 +35,7 @@ namespace Samplenator
         public abstract Dictionary<string, double> GetSettings();
 
 
-        internal abstract void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings);
+        protected abstract void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings);
     }
 
     class RWSampler : Sampler
@@ -57,7 +57,7 @@ namespace Samplenator
             return list[rnd.Next(list.Count)];
         }
 
-        internal override void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings)
+        protected override void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings)
         {
             var nodes = original.GetNodes();
 
@@ -77,7 +77,7 @@ namespace Samplenator
                 k++;
                 if(k > (100 * original.NodeCount))
                 {
-                    Console.WriteLine("Resetting walker");
+                    //Console.WriteLine("Resetting walker");
                     currentNode = RandomElement(nodes);
                     k = 0;
                 }
@@ -99,7 +99,7 @@ namespace Samplenator
             };
         }
 
-        internal override void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings)
+        protected override void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings)
         {
             var nodes = original.GetNodes();
 
@@ -121,12 +121,12 @@ namespace Samplenator
 
                 if (rnd.NextDouble() < p)
                 {
-                    Console.WriteLine("Resetting walker");
+                    //Console.WriteLine("Resetting walker");
                     currentNode = startNode;
                 }
 
                 k++;
-                if (k > (100 * original.NodeCount))
+                if (k > (1000 * original.NodeCount))
                 {
                     Console.WriteLine("CAN'T DO");
                     return;
@@ -148,7 +148,7 @@ namespace Samplenator
             };
         }
 
-        internal override void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings)
+        protected override void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings)
         {
             var nodes = original.GetNodes();
 
@@ -169,7 +169,7 @@ namespace Samplenator
 
                 if (rnd.NextDouble() < p)
                 {
-                    Console.WriteLine("Resetting walker");
+                    //Console.WriteLine("Resetting walker");
                     currentNode = RandomElement(nodes);
                 }
 
@@ -195,7 +195,7 @@ namespace Samplenator
             };
         }
 
-        internal override void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings)
+        protected override void DoSampling(Graph original, Graph sampled, Dictionary<string, double> settings)
         {
             var nodes = original.GetNodes();
 
@@ -204,18 +204,21 @@ namespace Samplenator
             int currentNode = RandomElement(nodes);
             int nextNode, k = 0;
 
+            List<int> currentNodeEdges = original.GetEdges(currentNode);
+
             while (sampled.NodeCount < size)
             {
-                var currentNodeEdges = original.GetEdges(currentNode);
                 nextNode = RandomElement(currentNodeEdges);
 
                 // p ≤ d(v)/d(u)
-                if (rnd.NextDouble() > (currentNodeEdges.Count / original.GetEdges(nextNode).Count))
+                var r = (currentNodeEdges.Count / (double)original.GetEdges(nextNode).Count);
+                if (rnd.NextDouble() > (currentNodeEdges.Count / (double)original.GetEdges(nextNode).Count))
                     continue;
 
                 sampled.AddEdge(currentNode, nextNode);
 
                 currentNode = nextNode;
+                currentNodeEdges = original.GetEdges(currentNode);
 
                 k++;
                 if (k > (100 * original.NodeCount))

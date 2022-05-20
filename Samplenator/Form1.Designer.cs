@@ -38,6 +38,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+            this.btnSample = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -94,16 +95,19 @@
             this.txtOutput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
+            this.txtOutput.ReadOnly = true;
+            this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtOutput.Size = new System.Drawing.Size(635, 320);
             this.txtOutput.TabIndex = 4;
             // 
             // comboMethod
             // 
+            this.comboMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboMethod.FormattingEnabled = true;
             this.comboMethod.Location = new System.Drawing.Point(787, 467);
             this.comboMethod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.comboMethod.Name = "comboMethod";
-            this.comboMethod.Size = new System.Drawing.Size(472, 28);
+            this.comboMethod.Size = new System.Drawing.Size(401, 28);
             this.comboMethod.TabIndex = 5;
             this.comboMethod.SelectedIndexChanged += new System.EventHandler(this.comboMethod_SelectedIndexChanged);
             // 
@@ -127,11 +131,22 @@
             this.propertyGrid.Size = new System.Drawing.Size(597, 277);
             this.propertyGrid.TabIndex = 7;
             // 
+            // btnSample
+            // 
+            this.btnSample.Location = new System.Drawing.Point(1194, 465);
+            this.btnSample.Name = "btnSample";
+            this.btnSample.Size = new System.Drawing.Size(65, 29);
+            this.btnSample.TabIndex = 8;
+            this.btnSample.Text = "GO";
+            this.btnSample.UseVisualStyleBackColor = true;
+            this.btnSample.Click += new System.EventHandler(this.btnSample_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1274, 804);
+            this.Controls.Add(this.btnSample);
             this.Controls.Add(this.propertyGrid);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboMethod);
@@ -160,5 +175,6 @@
         private OpenFileDialog openFileDialog1;
         private SaveFileDialog saveFileDialog1;
         private PropertyGrid propertyGrid;
+        private Button btnSample;
     }
 }
