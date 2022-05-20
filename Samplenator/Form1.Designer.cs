@@ -155,7 +155,9 @@
             this.Controls.Add(this.plotDgrDistr);
             this.Controls.Add(this.txtFilename);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Samplenator 3000";
             this.ResumeLayout(false);

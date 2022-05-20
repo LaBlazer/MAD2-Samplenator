@@ -45,7 +45,7 @@ namespace Samplenator
 
         public double Density
         {
-            get => EdgeCount / ((NodeCount * (NodeCount - 1)) / 2d);
+            get => Math.Abs(EdgeCount / ((NodeCount * (NodeCount - 1)) / 2d));
         }
 
         public List<int> GetNodes()

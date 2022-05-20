@@ -2,6 +2,7 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Samplenator.Util;
+using System.Diagnostics;
 using System.Text;
 
 namespace Samplenator
@@ -185,10 +186,11 @@ namespace Samplenator
             {
                 txtFilename.Text = openFileDialog1.FileName;
 
+                Print($"Loading file {openFileDialog1.FileName} ...");
+                
                 // load file
                 originalGraph = Graph.LoadFromCSV(openFileDialog1.FileName);
 
-                Print($"Loading file {openFileDialog1.FileName} ...");
 
                 DoStatics(originalGraph, "Original", true);
             }
@@ -206,11 +208,16 @@ namespace Samplenator
         {
             if (comboMethod.SelectedItem != null && originalGraph != null)
             {
-                sampledGraph = (comboMethod.SelectedItem as Sampler).SampleGraph(originalGraph, settings);
-
                 var name = (comboMethod.SelectedItem as Sampler).Name;
-
+                
                 Print($"Sampling graph using {name}");
+                Stopwatch sw = new Stopwatch();
+
+                sw.Start();
+                sampledGraph = (comboMethod.SelectedItem as Sampler).SampleGraph(originalGraph, settings);
+                sw.Stop();
+
+                Print($"Finished in: {sw.ElapsedMilliseconds}ms");
 
                 DoStatics(sampledGraph, name);
             }
